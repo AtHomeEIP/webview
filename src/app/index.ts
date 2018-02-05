@@ -6,7 +6,6 @@ import VueApollo from 'vue-apollo';
 
 import App from '@app/App.vue';
 import appRouter from '@app/router';
-import appStore from '@app/store';
 import Button from '@app/ui/Button.vue';
 
 
@@ -27,6 +26,5 @@ new Vue({
     components: { App },
     el: '#app',
     router: appRouter,
-    store: appStore,
     template: '<App/>'
 });
