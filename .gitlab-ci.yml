@@ -1,0 +1,43 @@
+image: node:9
+
+before_script:
+    - npm install
+cache:
+    paths:
+        - node_modules
+stages:
+    - build
+    - test
+
+# ==================================================
+#  Jobs
+# ==================================================
+
+#  Build
+# =========================
+
+bundle_job:
+    stage: build
+    script:
+        - npm run bundle
+
+#  Test
+# =========================
+
+coverage_job:
+    stage: test
+    artifacts:
+        paths:
+            - coverage
+    script:
+        - npm run test:cover
+
+lint_job:
+    stage: test
+    script:
+        - npm run lint
+
+unit_test_job:
+    stage: test
+    script:
+        - npm test

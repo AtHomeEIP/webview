@@ -1,0 +1,43 @@
+@import "text";
+@import "theme";
+@import "transitions";
+
+* {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    outline: none;
+
+    &::after, &::before {
+        box-sizing: border-box;
+    }
+}
+
+html {
+    background: $default-background;
+    color: $default-color;
+    font-family: Nunito, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    height: 100%;
+    line-height: 1.25;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+#app {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+}

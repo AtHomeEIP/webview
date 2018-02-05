@@ -1,0 +1,21 @@
+{
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "static/img/icons/android-chrome-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "static/img/icons/android-chrome-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "name": "WoodBox",
+    "orientation": "portrait",
+    "short_name": "WoodBox",
+    "start_url": "/",
+    "theme_color": "#ffffff"
+}

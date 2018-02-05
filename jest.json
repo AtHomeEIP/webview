@@ -1,0 +1,33 @@
+{
+    "collectCoverageFrom": [
+        "src/app/**/*.ts"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+        "html"
+    ],
+    "globals": {
+        "ts-jest": {
+            "skipBabel": true,
+            "tsConfigFile": "test/tsconfig.json"
+        }
+    },
+    "mapCoverage": true,
+    "moduleDirectories": [
+        "node_modules",
+        "src/app"
+    ],
+    "moduleFileExtensions": [
+        "ts",
+        "js",
+        "json",
+        "node"
+    ],
+    "moduleNameMapper": {
+        "^@app/(.*)": "$1"
+    },
+    "testRegex": "test/.*\\.spec\\.ts$",
+    "transform": {
+        "\\.ts": "ts-jest"
+    }
+}

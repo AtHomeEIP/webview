@@ -1,0 +1,47 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true,
+        "baseUrl": ".",
+        "downlevelIteration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "inlineSources": true,
+        "lib": [
+            "dom",
+            "es5",
+            "es6",
+            "es7"
+        ],
+        "locale": "en-us",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "noEmitHelpers": true,
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "paths": {
+            "@app/*": [
+                "src/app/*"
+            ],
+            "@css/*": [
+                "src/css/*"
+            ],
+            "@static/*": [
+                "static/*"
+            ]
+        },
+        "pretty": true,
+        "sourceMap": true,
+        "strictNullChecks": true,
+        "stripInternal": true,
+        "target": "es5",
+        "types": []
+    },
+    "include": [
+        "src/app",
+        "typings"
+    ]
+}
