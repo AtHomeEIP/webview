@@ -58,7 +58,7 @@
     "scripts": {
         "bundle": "NODE_ENV=production node build/bundle.js",
         "clean": "rm -fr coverage dist node_modules",
-        "lint": "tslint --project tsconfig.json src/app/**/*.{ts,vue}",
+        "lint": "tslint --project tsconfig.json src/app/**/*.ts",
         "start": "NODE_ENV=development webpack-dev-server --config build/webpack.config.js --hot --inline",
         "test": "NODE_ENV=test jest --config jest.json",
         "test:cover": "NODE_ENV=test jest --config jest.json --coverage"
