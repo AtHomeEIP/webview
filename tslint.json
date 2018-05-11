@@ -24,10 +24,7 @@
         ],
         "completed-docs": false,
         "curly": true,
-        "cyclomatic-complexity": [
-            true,
-            10
-        ],
+        "cyclomatic-complexity": false,
         "deprecation": true,
         "encoding": true,
         "eofline": true,
@@ -41,7 +38,7 @@
             4
         ],
         "interface-name": false,
-        "interface-over-type-literal": true,
+        "interface-over-type-literal": false,
         "jsdoc-format": [
             true,
             "check-multiline-start"
@@ -58,18 +55,11 @@
             "exclude-class-expressions"
         ],
         "max-file-line-count": false,
-        "max-line-length": [
-            true,
-            {
-                "limit": 120,
-                "ignore-pattern": "^import |^export {(.*?)}|class [a-zA-Z] implements |// | \\* "
-            }
-        ],
+        "max-line-length": false,
         "member-access": false,
         "member-ordering": [
             true,
             {
-                "alphabetize": true,
                 "order": [
                     "public-static-field",
                     "protected-static-field",
@@ -108,8 +98,8 @@
         "no-duplicate-super": true,
         "no-duplicate-switch-case": true,
         "no-duplicate-variable": true,
-        "no-dynamic-delete": true,
-        "no-empty": true,
+        "no-dynamic-delete": false,
+        "no-empty": false,
         "no-empty-interface": false,
         "no-eval": true,
         "no-floating-promises": true,
@@ -161,17 +151,14 @@
         "no-use-before-declare": true,
         "no-var-keyword": true,
         "no-var-requires": true,
-        "no-void-expression": [
-            true,
-            "ignore-arrow-function-shorthand"
-        ],
+        "no-void-expression": false,
         "number-literal-format": true,
         "object-literal-key-quotes": [
             true,
             "as-needed"
         ],
-        "object-literal-shorthand": true,
-        "object-literal-sort-keys": true,
+        "object-literal-shorthand": false,
+        "object-literal-sort-keys": false,
         "one-line": [
             true,
             "check-catch",
@@ -195,7 +182,7 @@
                 "named-imports-order": "case-insensitive"
             }
         ],
-        "prefer-conditional-expression": true,
+        "prefer-conditional-expression": false,
         "prefer-const": true,
         "prefer-for-of": true,
         "prefer-function-over-method": false,
@@ -271,8 +258,7 @@
         "variable-name": [
             true,
             "allow-leading-underscore",
-            "ban-keywords",
-            "check-format"
+            "ban-keywords"
         ],
         "whitespace": [
             true,

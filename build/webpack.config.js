@@ -1,93 +1,94 @@
-const copyPlugin              = require('copy-webpack-plugin'),
-      extractTextPlugin       = require('extract-text-webpack-plugin'),
-      htmlPlugin              = require('html-webpack-plugin'),
-      optimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-      path                    = require('path'),
-      uglifyJsPlugin          = require('uglifyjs-webpack-plugin'),
-      webpack                 = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin'),
+    HtmlPlugin = require('html-webpack-plugin'),
+    OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
+    Path = require('path'),
+    VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 
-const distDir   = path.resolve(__dirname, '..', 'dist'),
-      nodeEnv   = process.env.NODE_ENV === 'production' ? 'production' : 'development',
-      prodEnv   = nodeEnv === 'production',
-      srcDir    = path.resolve(__dirname, '..', 'src'),
-      srcAppDir = path.resolve(srcDir, 'app'),
-      srcCssDir = path.resolve(srcDir, 'css'),
-      staticDir = path.resolve(__dirname, '..', 'static');
+const DIR_DIST = Path.resolve(__dirname, '..', 'dist'),
+    DIR_SRC = Path.resolve(__dirname, '..', 'src'),
+    DIR_SRC_APP = Path.resolve(DIR_SRC, 'app'),
+    DIR_SRC_CSS = Path.resolve(DIR_SRC, 'css'),
+    DIR_STATIC = Path.resolve(__dirname, '..', 'static'),
+    NODE_ENV = process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    PROD_ENV = NODE_ENV === 'production';
 
-const webpackConfig = {
-    entry:   {
+module.exports = {
+    mode: NODE_ENV,
+
+    entry: {
         app: [
-            path.resolve(srcAppDir, 'index.ts'),
-            path.resolve(srcCssDir, 'styles.scss')
+            Path.resolve(DIR_SRC_APP, 'index.ts'),
+            Path.resolve(DIR_SRC_CSS, 'styles.scss')
         ]
     },
-    output:  {
-        filename: prodEnv ? '[name].[chunkhash:8].js' : '[name].js',
-        path:     distDir
+    output: {
+        filename: PROD_ENV ? '[name].[chunkhash:8].js' : '[name].js',
+        path: DIR_DIST
     },
     resolve: {
-        alias:      {
-            '@app':    srcAppDir,
-            '@css':    srcCssDir,
-            '@static': staticDir,
-            'vue$':    'vue/dist/vue.esm.js'
+        alias: {
+            '@app': DIR_SRC_APP,
+            '@css': DIR_SRC_CSS,
+            '@static': DIR_STATIC,
+            'vue$': 'vue/dist/vue.esm.js'
         },
         extensions: ['.ts', '.js', '.vue', '.json']
     },
 
     devServer: {
-        contentBase: distDir,
-        host:        '0.0.0.0',
-        noInfo:      true,
-        open:        true,
-        overlay:     { errors: true, warning: false },
-        port:        3000
+        contentBase: DIR_DIST,
+        host: '0.0.0.0',
+        noInfo: true,
+        open: true,
+        overlay: { errors: true, warning: false },
+        port: 3000
     },
-    devtool:   prodEnv ? false : 'cheap-module-eval-source-map',
+    devtool: PROD_ENV ? false : 'cheap-module-eval-source-map',
 
     module: {
         rules: [
             {
-                enforce: 'pre',
-                test:    /\.js$/,
+                test: /\.js$/,
                 exclude: [/node_modules/],
-                use:     'source-map-loader'
+                enforce: 'pre',
+                use: 'source-map-loader'
             },
             {
-                test:    /\.s?css$/,
-                include: [srcAppDir, srcCssDir],
-                use:     ['css-hot-loader', ...extractTextPlugin.extract({
+                test: /\.s?css$/,
+                include: [DIR_SRC_APP, DIR_SRC_CSS, DIR_STATIC],
+                use: ['css-hot-loader', ...ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use:      ['css-loader', 'sass-loader']
+                    use: ['css-loader', 'sass-loader']
                 })]
             },
             {
-                test:    /\.ts$/,
-                include: [srcAppDir],
-                loader:  'ts-loader',
+                test: /\.ts$/,
+                include: [DIR_SRC_APP],
+                loader: 'ts-loader',
                 options: { appendTsSuffixTo: [/\.vue$/] }
             },
             {
-                test:    /\.vue$/,
-                include: [srcAppDir],
-                loader:  'vue-loader',
+                test: /\.vue$/,
+                include: [DIR_SRC_APP],
+                loader: 'vue-loader',
                 options: { esModule: true }
             },
             {
-                test:    /\.(gif|jpe?g|png|svg)(\?.*)?$/,
-                loader:  'url-loader',
+                test: /\.(gif|jpe?g|png|svg)(\?.*)?$/,
+                loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name:  path.join('static', 'img', '[name].[hash:8].[ext]')
+                    name: Path.join('static', 'img', '[name].[hash:8].[ext]')
                 }
             },
             {
-                test:    /\.(eot|otf|ttf|woff2?)(\?.*)?$/,
-                loader:  'url-loader',
+                test: /\.(eot|otf|ttf|woff2?)(\?.*)?$/,
+                loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name:  path.join('static', 'fonts', '[name].[hash:8].[ext]')
+                    name: Path.join('static', 'fonts', '[name].[hash:8].[ext]')
                 }
             }
         ]
@@ -95,52 +96,50 @@ const webpackConfig = {
 
     plugins: [
         // HTML
-        new htmlPlugin({
-            inject:   true,
-            minify:   {
-                collapseWhitespace:    true,
+        new HtmlPlugin({
+            inject: true,
+            minify: {
+                collapseWhitespace: true,
                 removeAttributeQuotes: true,
-                removeComments:        true
+                removeComments: true
             },
-            template: path.resolve(srcDir, 'index.html')
-        }),
-        // Assets
-        new copyPlugin([
-            { from: '**/*', to: 'static' }
-        ], {
-            context: staticDir,
-            ignore:  ['.*']
+            template: Path.resolve(DIR_SRC, 'index.html')
         }),
         // CSS
-        new extractTextPlugin({
+        new ExtractTextPlugin({
             allChunks: true,
-            filename:  prodEnv ? 'styles.[contenthash:8].css' : 'styles.css'
+            filename: PROD_ENV ? 'styles.[md5:contenthash:hex:8].css' : 'styles.css'
         }),
-        new optimizeCssAssetsPlugin({
+        new OptimizeCssAssetsPlugin({
             cssProcessorOptions: {
                 discardComments: { removeAll: true }
             }
         }),
-        // JS
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(nodeEnv)
+        // Assets
+        new CopyPlugin([
+            { from: '**/*', to: 'static' }
+        ], {
+            context: DIR_STATIC,
+            ignore: ['.*']
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name:      'vendor',
-            minChunks: module => module.context && module.context.includes('node_modules')
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name:      'manifest',
-            minChunks: Infinity
-        })
-    ]
+        // VueJS
+        new VueLoaderPlugin()
+    ],
+
+    optimization: {
+        runtimeChunk: {
+            name: 'manifest'
+        },
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    chunks: 'all',
+                    name: 'vendor',
+                    test: module => {
+                        return module.context && module.context.includes('node_modules');
+                    }
+                }
+            }
+        }
+    }
 };
-
-if (prodEnv) {
-    webpackConfig.plugins.push(
-        new webpack.HashedModuleIdsPlugin(),
-        new uglifyJsPlugin()
-    );
-}
-
-module.exports = webpackConfig;

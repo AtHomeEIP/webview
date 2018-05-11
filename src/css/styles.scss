@@ -1,9 +1,9 @@
+@import "button";
+@import "form";
+@import "input";
 @import "text";
-@import "theme";
-@import "transitions";
 
 * {
-    appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
     box-sizing: border-box;
@@ -15,8 +15,8 @@
 }
 
 html {
-    background: $default-background;
-    color: $default-color;
+    background: #f7f7fa;
+    color: #424953;
     font-family: Nunito, sans-serif;
     font-size: 16px;
     font-weight: 400;
