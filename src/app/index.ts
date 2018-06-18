@@ -18,8 +18,7 @@ const apolloProvider = new VueApollo({
     defaultClient: new ApolloClient({
         cache: new InMemoryCache(),
         connectToDevTools: true,
-        // link: new HttpLink({ uri: 'http://woodbox.io:8080/graphql' })
-        link: new HttpLink({ uri: 'http://lferry.xyz:8080/graphql' })
+        link: new HttpLink({ uri: 'localhost:8080/graphql' })
     })
 });
 Vue.use(VueApollo);
