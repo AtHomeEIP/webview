@@ -1,43 +1,43 @@
-image: node:9
-
-before_script:
-    - npm install
-cache:
-    paths:
-        - node_modules
+image: node:10
 stages:
-    - build
-    - test
+  - setup
+  - build
+  - test
 
-# ==================================================
-#  Jobs
-# ==================================================
+# Setup stage
 
-#  Build
-# =========================
+prepare_job:
+  stage: setup
+  script:
+    - npm install
+  cache:
+    key: node_modules
+    policy: push
+    paths:
+      - node_modules
+
+# Build stage
 
 bundle_job:
-    stage: build
-    script:
-        - npm run bundle
+  stage: build
+  script:
+    - npm install
+    - npm run bundle
+  cache:
+    key: node_modules
+    policy: pull
+    paths:
+      - node_modules
 
-#  Test
-# =========================
-
-coverage_job:
-    stage: test
-    artifacts:
-        paths:
-            - coverage
-    script:
-        - npm run test:cover
+# Test stage
 
 lint_job:
-    stage: test
-    script:
-        - npm run lint
-
-unit_test_job:
-    stage: test
-    script:
-        - npm test
+  stage: test
+  script:
+    - npm install
+    - npm run lint
+  cache:
+    key: node_modules
+    policy: pull
+    paths:
+      - node_modules

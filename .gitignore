@@ -1,7 +1,11 @@
-.DS_Store
+# JetBrains
 .idea/
 
-coverage/
-dist/
+# MacOS
+.DS_Store
+
+# NPM
 node_modules/
-npm-debug.log
+
+# Project
+dist/

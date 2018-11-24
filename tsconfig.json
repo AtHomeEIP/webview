@@ -1,45 +1,33 @@
 {
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "alwaysStrict": true,
-        "baseUrl": ".",
-        "downlevelIteration": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "inlineSources": true,
-        "lib": [
-            "dom",
-            "es5",
-            "es6",
-            "es7"
-        ],
-        "locale": "en-us",
-        "module": "es2015",
-        "moduleResolution": "node",
-        "noEmitHelpers": true,
-        "noEmitOnError": true,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "paths": {
-            "@app/*": [
-                "src/app/*"
-            ],
-            "@css/*": [
-                "src/css/*"
-            ],
-            "@static/*": [
-                "static/*"
-            ]
-        },
-        "pretty": true,
-        "sourceMap": true,
-        "strictNullChecks": true,
-        "stripInternal": true,
-        "target": "es5"
-    },
-    "include": [
-        "src/app",
-        "typings"
-    ]
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"alwaysStrict": true,
+		"baseUrl": ".",
+		"downlevelIteration": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "react",
+		"lib": ["dom", "es2018"],
+		"module": "es2015",
+		"moduleResolution": "node",
+		"noEmitOnError": true,
+		"noErrorTruncation": true,
+		"noFallthroughCasesInSwitch": true,
+		"paths": {
+			"@api": ["src/api/index.ts"],
+			"@api/*": ["src/api/*"],
+			"@components/*": ["src/components/*"],
+			"@langs/*": ["src/langs/*"],
+			"@pages/*": ["src/pages/*"],
+			"@store": ["src/store/index.ts"],
+			"@store/*": ["src/store/*"]
+		},
+		"preserveWatchOutput": true,
+		"pretty": true,
+		"removeComments": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "es5"
+	},
+	"include": ["src"]
 }
