@@ -15,7 +15,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
 			"@api": ["src/api/index.ts"],
-			"@api/*": ["src/api/*"],
+			"@api/types": ["src/api/types/index.ts"],
 			"@components/*": ["src/components/*"],
 			"@langs/*": ["src/langs/*"],
 			"@pages/*": ["src/pages/*"],
