@@ -18,7 +18,7 @@
 			"@api/errors": ["src/api/errors/index.ts"],
 			"@api/types": ["src/api/types/index.ts"],
 			"@components/*": ["src/components/*"],
-			"@langs/*": ["src/langs/*"],
+			"@i18n": ["src/i18n/index.ts"],
 			"@pages/*": ["src/pages/*"],
 			"@store": ["src/store/index.ts"],
 			"@store/*": ["src/store/*"]
