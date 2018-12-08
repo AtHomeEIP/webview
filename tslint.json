@@ -1,8 +1,11 @@
 {
 	"extends": "tslint:recommended",
 	"rules": {
+		"array-type": {
+			"options": ["array"]
+		},
 		"indent": {
-			"options": "tabs"
+			"options": ["tabs"]
 		},
 		"interface-name": false,
 		"max-classes-per-file": false,
@@ -11,6 +14,9 @@
 		"no-string-throw": false,
 		"object-literal-shorthand": false,
 		"object-literal-sort-keys": false,
+		"member-access": {
+			"options": ["no-public"]
+		},
 		"quotemark": {
 			"options": ["single", "jsx-double"]
 		},
