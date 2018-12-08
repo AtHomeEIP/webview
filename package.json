@@ -1,7 +1,6 @@
 {
 	"author": "Romain Faust <romain.faust@epitech.eu>",
 	"devDependencies": {
-		"@types/jwt-decode": "^2.2.1",
 		"@types/react": "^16.7.4",
 		"@types/react-dom": "^16.0.9",
 		"@types/react-router-dom": "^4.3.1",
@@ -14,7 +13,6 @@
 		"gulp-jsonmin": "^1.2.0",
 		"gulp-rename": "^1.4.0",
 		"gulp-sass": "^4.0.2",
-		"jwt-decode": "^2.2.0",
 		"mobx": "^5.6.0",
 		"mobx-react": "^5.3.6",
 		"mobx-react-router": "^4.0.5",
