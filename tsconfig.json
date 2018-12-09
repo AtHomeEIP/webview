@@ -19,8 +19,8 @@
 			"@api/types": ["src/api/types/index.ts"],
 			"@i18n": ["src/i18n/index.ts"],
 			"@store": ["src/store/index.ts"],
-			"@ui/pages/*": ["src/ui/pages/*"],
-			"@ui/components/*": ["src/ui/components/*"]
+			"@ui/components/*": ["src/ui/components/*"],
+			"@ui/pages/*": ["src/ui/pages/*"]
 		},
 		"preserveWatchOutput": true,
 		"pretty": true,
