@@ -3,22 +3,42 @@ import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import Menu from '@components/menu';
-import ModuleNotFound from '@components/module-not-found';
-import EditModuleModal from '@pages/module/edit-module';
 import stores from '@store';
+import Menu from '@ui/components/menu';
+import EditModuleModal from '@ui/components/modals/edit-module';
+import ModuleIcon from '@ui/components/module-icon';
+import ModuleNotFound from '@ui/components/module-not-found';
+
+interface RouteParams {
+	id: string;
+}
 
 @observer
-class Module extends Component<RouteComponentProps<{ id: string }>> {
+export default class Module extends Component<RouteComponentProps<RouteParams>> {
 
 	@observable
 	private _showEditModal = false;
 
-	public render() {
-		const { id: moduleId } = this.props.match.params;
-		const { i18n: i18nStore, modules: modulesStore } = stores;
+	@action.bound
+	private closeEditModal() {
+		this._showEditModal = false;
+	}
 
-		const module = modulesStore.modules.find((m) => m.id === moduleId);
+	componentDidMount() {
+		const { id } = this.props.match.params;
+
+		stores.modules.loadModuleInfo(id);
+	}
+
+	@action.bound
+	private openEditModal() {
+		this._showEditModal = true;
+	}
+
+	render() {
+		const { id: moduleId } = this.props.match.params;
+
+		const module = stores.modules.modules.find((m) => m.id === moduleId);
 
 		if (module == null) {
 			return <ModuleNotFound/>;
@@ -38,7 +58,7 @@ class Module extends Component<RouteComponentProps<{ id: string }>> {
 						<article className="media">
 							<figure className="media-left">
 								<div className="icon is-large">
-									<span className="far fa-2x fa-lightbulb"/>
+									<ModuleIcon moduleType={module.type}/>
 								</div>
 							</figure>
 							<div className="media-content">
@@ -53,7 +73,7 @@ class Module extends Component<RouteComponentProps<{ id: string }>> {
 										<span className="fas fa-pen"/>
 									</span>
 									<span>
-										{i18nStore.current.editInformation}
+										{stores.i18n.current.actions.editInformation}
 									</span>
 								</button>
 							</div>
@@ -63,18 +83,4 @@ class Module extends Component<RouteComponentProps<{ id: string }>> {
 			</>
 		);
 	}
-
-	@action.bound
-	private closeEditModal() {
-		this._showEditModal = false;
-	}
-
-	@action.bound
-	private openEditModal() {
-		this._showEditModal = true;
-	}
 }
-
-export {
-	Module as default,
-};

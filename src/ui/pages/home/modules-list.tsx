@@ -2,16 +2,17 @@ import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
 import { Module } from '@api/types';
-import ModulesListItem from '@pages/home/modules-list-item';
+
+import ModulesListItem from './modules-list-item';
 
 interface Props {
 	modules: Module[];
 }
 
 @observer
-class ModulesList extends Component<Props> {
+export default class ModulesList extends Component<Props> {
 
-	public render() {
+	render() {
 		const { modules } = this.props;
 
 		return modules.map((module) => (
@@ -19,7 +20,3 @@ class ModulesList extends Component<Props> {
 		));
 	}
 }
-
-export {
-	ModulesList as default,
-};

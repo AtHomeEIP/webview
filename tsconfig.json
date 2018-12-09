@@ -17,11 +17,10 @@
 			"@api": ["src/api/index.ts"],
 			"@api/errors": ["src/api/errors/index.ts"],
 			"@api/types": ["src/api/types/index.ts"],
-			"@components/*": ["src/components/*"],
 			"@i18n": ["src/i18n/index.ts"],
-			"@pages/*": ["src/pages/*"],
 			"@store": ["src/store/index.ts"],
-			"@store/*": ["src/store/*"]
+			"@ui/pages/*": ["src/ui/pages/*"],
+			"@ui/components/*": ["src/ui/components/*"]
 		},
 		"preserveWatchOutput": true,
 		"pretty": true,

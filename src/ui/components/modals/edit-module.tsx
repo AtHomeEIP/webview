@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component, FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Module } from '@api/types';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 @observer
-class EditModule extends Component<Props> {
+export default class EditModule extends Component<Props> {
 
 	@observable
 	private _location: string;
@@ -23,18 +23,46 @@ class EditModule extends Component<Props> {
 	@observable
 	private _error: string | undefined;
 
-	public constructor(props: Props) {
+	constructor(props: Props) {
 		super(props);
 
-		const { module } = props;
-
-		this._location = module.location;
-		this._name = module.name;
+		this._location = props.module.location;
+		this._name = props.module.name;
 	}
 
-	public render() {
+	@action.bound
+	private handleLocationChange(event: ChangeEvent<HTMLSelectElement>) {
+		this._location = event.target.value;
+	}
+
+	@action.bound
+	private handleNameChange(event: ChangeEvent<HTMLInputElement>) {
+		this._name = event.target.value;
+	}
+
+	@action.bound
+	private async handleSubmit(event: FormEvent<HTMLFormElement>) {
+		const { module, onClose } = this.props;
+		const { modules: modulesStore } = stores;
+
+		event.preventDefault();
+
+		this._loading = true;
+		try {
+			await modulesStore.updateModule({
+				...module,
+				name: this._name,
+				location: this._location,
+			});
+			onClose();
+		} catch (error) {
+			this._error = error;
+			this._loading = false;
+		}
+	}
+
+	render() {
 		const { onClose } = this.props;
-		const { i18n: i18nStore } = stores;
 
 		let loader;
 		if (this._loading) {
@@ -61,36 +89,42 @@ class EditModule extends Component<Props> {
 						<div className="card">
 							<div className="card-content">
 								<h4 className="title is-4">
-									{i18nStore.current.updateModule}
+									{stores.i18n.current.updateModule}
 								</h4>
 								<form onSubmit={this.handleSubmit}>
 									<div className="field">
 										<label htmlFor="name" className="label">
-											{i18nStore.current.name}
+											{stores.i18n.current.moduleName}
 										</label>
 										<input
 											id="name" className="input" type="text"
-											autoComplete="off" placeholder={`${i18nStore.current.examplePrefix} ${i18nStore.current.moduleNameExample}`}
+											autoComplete="off" placeholder={stores.i18n.current.examples.moduleName}
 											value={this._name} onChange={this.handleNameChange}
 											required
 										/>
 									</div>
 									<div className="field">
 										<label htmlFor="location" className="label">
-											{i18nStore.current.location}
+											{stores.i18n.current.location}
 										</label>
 										<div className="select is-fullwidth">
 											<select id="location" value={this._location} onChange={this.handleLocationChange} required>
-												<option value="Chambre">{i18nStore.current.bedroom}</option>
-												<option value="Cuisine">{i18nStore.current.kitchen}</option>
-												<option value="Salon">{i18nStore.current.livingRoom}</option>
+												<option value="Chambre">
+													{stores.i18n.current.locations.bedroom}
+												</option>
+												<option value="Cuisine">
+													{stores.i18n.current.locations.kitchen}
+												</option>
+												<option value="Salon">
+													{stores.i18n.current.locations.livingRoom}
+												</option>
 											</select>
 										</div>
 									</div>
 									<div className="field is-grouped is-grouped-centered">
 										<div className="control">
 											<button className="button is-primary" type="submit">
-												{i18nStore.current.save}
+												{stores.i18n.current.actions.save}
 											</button>
 										</div>
 									</div>
@@ -106,44 +140,7 @@ class EditModule extends Component<Props> {
 	}
 
 	@action.bound
-	private handleLocationChange(event: React.ChangeEvent<HTMLSelectElement>) {
-		this._location = event.target.value;
-	}
-
-	@action.bound
-	private handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-		this._name = event.target.value;
-	}
-
-	@action.bound
-	private async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-		const { module, onClose } = this.props;
-		const { modules: modulesStore } = stores;
-
-		event.preventDefault();
-
-		this._loading = true;
-		try {
-			await modulesStore.updateModule({
-				...module,
-				name: this._name,
-				location: this._location,
-			});
-			onClose();
-		} catch (error) {
-			this._error = error;
-			this._loading = false;
-		}
-	}
-
-	@action.bound
 	private resetError() {
 		this._error = undefined;
 	}
 }
-
-export {
-	EditModule as default,
-};
-
-// TODO: i18n

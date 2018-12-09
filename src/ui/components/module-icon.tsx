@@ -9,13 +9,7 @@ interface Props extends HTMLProps<HTMLSpanElement> {
 }
 
 @observer
-class ModuleIcon extends Component<Props> {
-
-	public render() {
-		const { moduleType, ...rest } = this.props;
-
-		return <span {...rest} className={this.className} style={this.style}/>;
-	}
+export default class ModuleIcon extends Component<Props> {
 
 	@computed
 	private get className() {
@@ -52,8 +46,10 @@ class ModuleIcon extends Component<Props> {
 				return { color: '#dbdbdb' };
 		}
 	}
-}
 
-export {
-	ModuleIcon as default,
-};
+	render() {
+		const { moduleType, ...rest } = this.props;
+
+		return <span {...rest} className={this.className} style={this.style}/>;
+	}
+}

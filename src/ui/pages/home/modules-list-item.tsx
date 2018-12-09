@@ -3,22 +3,22 @@ import React, { AnchorHTMLAttributes, Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Module } from '@api/types';
-import ModuleIcon from '@components/module-icon';
+import ModuleIcon from '@ui/components/module-icon';
 
 interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
 	module: Module;
 }
 
 @observer
-class ModulesListItem extends Component<Props> {
+export default class ModulesListItem extends Component<Props> {
 
-	public render() {
+	render() {
 		const { module, ...rest } = this.props;
 
 		const moduleLink = `/modules/${module.id}`;
 
 		return (
-			<Link to={moduleLink} {...rest}>
+			<Link {...rest} to={moduleLink}>
 				<div className="card">
 					<div className="card-content">
 						<article className="media">
@@ -42,7 +42,3 @@ class ModulesListItem extends Component<Props> {
 		);
 	}
 }
-
-export {
-	ModulesListItem as default,
-};

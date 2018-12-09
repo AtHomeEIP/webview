@@ -24,10 +24,9 @@ module.exports = {
 	resolve: {
 		alias: {
 			'@api': join(SRC_DIR, 'api'),
-			'@components': join(SRC_DIR, 'components'),
 			'@i18n': join(SRC_DIR, 'i18n'),
-			'@pages': join(SRC_DIR, 'pages'),
 			'@store': join(SRC_DIR, 'store'),
+			'@ui': join(SRC_DIR, 'ui'),
 			'react$': PROD_ENV ? 'react/umd/react.production.min.js' : 'react/umd/react.development.js',
 			'react-dom$': PROD_ENV ? 'react-dom/umd/react-dom.production.min.js' : 'react-dom/umd/react-dom.development.js',
 		},
