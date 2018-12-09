@@ -49,6 +49,11 @@ export default class ModulesStore {
 	}
 
 	@action.bound
+	loadModulesList() {
+		this.updateModulesList();
+	}
+
+	@action.bound
 	updateModule(module: Module) {
 		return updateModule(module);
 	}
