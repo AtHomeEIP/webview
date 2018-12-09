@@ -10,6 +10,9 @@ export interface LanguageDefinition {
 		editInformation: string;
 		save: string;
 	};
+	autoUpdateModulesList: string;
+	autoUpdateModulesListEnabled: string;
+	autoUpdateModulesListDisabled: string;
 	errors: {
 		[apiErrors.MODULE_NOT_FOUND]: string;
 		[apiErrors.UNKNOWN_ERROR]: string;

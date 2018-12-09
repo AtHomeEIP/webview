@@ -10,15 +10,42 @@ import Menu from '@ui/components/menu';
 export default class Settings extends Component {
 
 	@action.bound
+	private handleAutoUpdateChange(event: ChangeEvent<HTMLInputElement>) {
+		if (event.target.checked) {
+			stores.modules.enableModulesListAutoUpdate();
+		} else {
+			stores.modules.disableModulesListAutoUpdate();
+		}
+	}
+
+	@action.bound
 	private handleLanguageChange(event: ChangeEvent<HTMLSelectElement>) {
 		stores.i18n.use(event.target.value as Languages);
 	}
 
 	render() {
+		const autoUpdateStatus = stores.modules.hasModulesListAutoUpdateEnabled
+			? stores.i18n.current.autoUpdateModulesListEnabled
+			: stores.i18n.current.autoUpdateModulesListDisabled;
+
 		return (
 			<Fragment>
 				<Menu/>
 				<div className="section">
+					<div className="field">
+						<label className="label">
+							{stores.i18n.current.autoUpdateModulesList}
+						</label>
+						<div className="control">
+							<input
+								id="auto-update" className="switch is-rounded" type="checkbox"
+								checked={stores.modules.hasModulesListAutoUpdateEnabled} onChange={this.handleAutoUpdateChange}
+							/>
+							<label htmlFor="auto-update">
+								{autoUpdateStatus}
+							</label>
+						</div>
+					</div>
 					<div className="field">
 						<label htmlFor="language" className="label">
 							{stores.i18n.current.language}
