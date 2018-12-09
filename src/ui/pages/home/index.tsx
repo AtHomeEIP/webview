@@ -9,6 +9,10 @@ import ModulesList from './modules-list';
 @observer
 export default class Home extends Component {
 
+	componentDidMount() {
+		stores.modules.loadModulesList();
+	}
+
 	render() {
 		return (
 			<Fragment>
