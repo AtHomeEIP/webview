@@ -43,17 +43,17 @@ export default class EditModule extends Component<Props> {
 	@action.bound
 	private async handleSubmit(event: FormEvent<HTMLFormElement>) {
 		const { module, onClose } = this.props;
-		const { modules: modulesStore } = stores;
 
 		event.preventDefault();
 
 		this._loading = true;
 		try {
-			await modulesStore.updateModule({
+			await stores.modules.updateModule({
 				...module,
 				name: this._name,
 				location: this._location,
 			});
+			await stores.modules.loadModuleInfo(module.id);
 			onClose();
 		} catch (error) {
 			this._error = error;
