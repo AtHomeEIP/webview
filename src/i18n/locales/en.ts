@@ -7,6 +7,9 @@ const DEFINITION: LanguageDefinition = {
 		editInformation: 'Edit information',
 		save: 'Save',
 	},
+	autoUpdateModulesList: 'Auto-update modules list',
+	autoUpdateModulesListEnabled: 'Enabled',
+	autoUpdateModulesListDisabled: 'Disabled',
 	errors: {
 		[apiErrors.MODULE_NOT_FOUND]: 'Module not found',
 		[apiErrors.UNKNOWN_ERROR]: 'An unknown error occurred. Please try again later',
