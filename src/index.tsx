@@ -65,9 +65,30 @@ function syncI18nStoreWithMoment() {
 	});
 }
 
+function syncModulesStoreWithLocalStorage() {
+	const localStorageKey = 'auto-update-modules-list';
+
+	const savedStatus = localStorage.getItem(localStorageKey);
+	if (savedStatus == null || savedStatus === 'true') {
+		store.modules.enableModulesListAutoUpdate();
+	}
+
+	reaction(() => store.modules.hasModulesListAutoUpdateEnabled, (status) => {
+		if (status) {
+			localStorage.setItem(localStorageKey, 'true');
+		} else {
+			localStorage.setItem(localStorageKey, 'false');
+		}
+	}, {
+		fireImmediately: true,
+	});
+}
+
 initializeI18nStore();
 syncI18nStoreWithLocalStorage();
 syncI18nStoreWithMoment();
+
+syncModulesStoreWithLocalStorage();
 
 const syncedHistory = createSyncedHistory();
 
