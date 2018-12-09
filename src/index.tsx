@@ -7,31 +7,69 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Redirect, Route, Router, Switch } from 'react-router';
 
-import EN from '@langs/en';
-import FR from '@langs/fr';
-import Home from '@pages/home';
-import Module from '@pages/module';
-import Settings from '@pages/settings';
-import stores from '@store';
-import { Language } from '@store/i18n';
+import { EN, FR, Languages } from '@i18n';
+import store from '@store';
+import Home from '@ui/pages/home';
+import Module from '@ui/pages/module';
+import Settings from '@ui/pages/settings';
 
-const { i18n: i18nStore, router: routerStore } = stores;
-
-reaction(() => i18nStore.language, (language) => {
-	moment.locale(language);
-});
-
-i18nStore.addLanguage(Language.EN, EN);
-i18nStore.addLanguage(Language.FR, FR);
-
-if (window.navigator.language.startsWith('fr')) {
-	i18nStore.setLanguage(Language.FR);
-} else {
-	i18nStore.setLanguage(Language.EN);
+function createSyncedHistory() {
+	return syncHistoryWithStore(
+		createBrowserHistory(),
+		store.router,
+	);
 }
 
-const history = createBrowserHistory();
-const syncedHistory = syncHistoryWithStore(history, routerStore);
+function initializeI18nStore() {
+	store.i18n.register(Languages.EN, EN);
+	store.i18n.register(Languages.FR, FR);
+
+	if (navigator.language.startsWith('fr')) {
+		store.i18n.use(Languages.FR);
+	} else {
+		store.i18n.use(Languages.EN);
+	}
+}
+
+function syncI18nStoreWithLocalStorage() {
+	const localStorageKey = 'language';
+
+	const savedLanguage = localStorage.getItem(localStorageKey);
+	if (savedLanguage != null) {
+		for (const language of Object.values(Languages)) {
+			if (language === savedLanguage) {
+				store.i18n.use(language);
+				break;
+			}
+		}
+	}
+
+	reaction(() => store.i18n.language, (language) => {
+		if (language == null) {
+			localStorage.removeItem(localStorageKey);
+		} else {
+			localStorage.setItem(localStorageKey, language);
+		}
+	}, {
+		fireImmediately: true,
+	});
+}
+
+function syncI18nStoreWithMoment() {
+	reaction(() => store.i18n.language, (language) => {
+		if (language != null) {
+			moment.locale(language);
+		}
+	}, {
+		fireImmediately: true,
+	});
+}
+
+initializeI18nStore();
+syncI18nStoreWithLocalStorage();
+syncI18nStoreWithMoment();
+
+const syncedHistory = createSyncedHistory();
 
 render(
 	<Router history={syncedHistory}>
@@ -46,7 +84,3 @@ render(
 );
 
 // TODO: module details (description, samples, ...)
-// TODO: i18n for errors
-// TODO: add button in settings to change language
-// TODO: persist language selection ?
-// TODO: find why the refresh-token is not kept
