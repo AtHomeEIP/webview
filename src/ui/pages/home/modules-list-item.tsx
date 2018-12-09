@@ -19,7 +19,7 @@ export default class ModulesListItem extends Component<Props> {
 
 		return (
 			<Link {...rest} to={moduleLink}>
-				<div className="card">
+				<div className="card" style={{ marginBottom: 15 }}>
 					<div className="card-content">
 						<article className="media">
 							<figure className="media-left">
