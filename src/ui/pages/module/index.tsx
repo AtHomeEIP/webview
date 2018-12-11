@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import stores from '@store';
@@ -50,7 +50,7 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 		}
 
 		return (
-			<>
+			<Fragment>
 				{editModal}
 				<Menu/>
 				<div className="section">
@@ -80,7 +80,7 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 						</article>
 					</div>
 				</div>
-			</>
+			</Fragment>
 		);
 	}
 }
