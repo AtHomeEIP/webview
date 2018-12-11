@@ -6,11 +6,20 @@ export interface Module {
 	mac: string;
 	vendor: string;
 	samples: ModuleSample[];
+	thresholds: ModuleThreshold[];
 }
 
 export interface ModuleSample {
 	date: Date;
 	payload: string;
+}
+
+export interface ModuleThreshold {
+	name: string;
+	current: number;
+	min: number;
+	max: number;
+	default: number;
 }
 
 export type ModuleType =
