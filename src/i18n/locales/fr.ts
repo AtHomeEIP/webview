@@ -7,6 +7,7 @@ const DEFINITION: LanguageDefinition = {
 		editInformation: 'Modifier les informations',
 		save: 'Sauvegarder',
 	},
+	at: 'À',
 	autoUpdateModulesList: 'Mise à jour auto. de la liste des modules',
 	autoUpdateModulesListEnabled: 'Activée',
 	autoUpdateModulesListDisabled: 'Desactivée',
@@ -34,6 +35,8 @@ const DEFINITION: LanguageDefinition = {
 		home: 'Accueil',
 		settings: 'Paramètres',
 	},
+	recordedOn: 'Enregistré le',
+	samples: 'Données',
 	thresholds: 'Seuils',
 	updateModule: 'Modifier un module',
 };

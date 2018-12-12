@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import stores from '@store';
@@ -8,6 +8,7 @@ import Menu from '@ui/components/menu';
 import EditModuleModal from '@ui/components/modals/edit-module';
 import ModuleIcon from '@ui/components/module-icon';
 import ModuleNotFound from '@ui/components/module-not-found';
+import SamplesList from '@ui/pages/module/samples-list';
 
 interface RouteParams {
 	id: string;
@@ -50,7 +51,7 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 		}
 
 		return (
-			<>
+			<Fragment>
 				{editModal}
 				<Menu/>
 				<div className="section">
@@ -79,8 +80,14 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 							</div>
 						</article>
 					</div>
+					<div className="container" style={{ marginTop: '1.5rem' }}>
+						<h4 className="title is-4">
+							{stores.i18n.current.samples}
+						</h4>
+						<SamplesList samples={module.samples} thresholds={module.thresholds}/>
+					</div>
 				</div>
-			</>
+			</Fragment>
 		);
 	}
 }
