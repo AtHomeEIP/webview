@@ -24,7 +24,7 @@ export default class ModulesListItem extends Component<Props> {
 						<article className="media">
 							<figure className="media-left">
 								<span className="icon is-medium">
-									<ModuleIcon moduleType={module.type}/>
+									<ModuleIcon moduleType={module.type} isSmall/>
 								</span>
 							</figure>
 							<div className="media-content">
