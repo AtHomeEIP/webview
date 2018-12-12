@@ -10,6 +10,7 @@ export interface LanguageDefinition {
 		editInformation: string;
 		save: string;
 	};
+	at: string;
 	autoUpdateModulesList: string;
 	autoUpdateModulesListEnabled: string;
 	autoUpdateModulesListDisabled: string;
@@ -37,6 +38,8 @@ export interface LanguageDefinition {
 		home: string;
 		settings: string;
 	};
+	recordedOn: string;
+	samples: string;
 	thresholds: string;
 	updateModule: string;
 }

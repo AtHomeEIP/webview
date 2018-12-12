@@ -7,6 +7,7 @@ const DEFINITION: LanguageDefinition = {
 		editInformation: 'Edit information',
 		save: 'Save',
 	},
+	at: 'At',
 	autoUpdateModulesList: 'Auto-update modules list',
 	autoUpdateModulesListEnabled: 'Enabled',
 	autoUpdateModulesListDisabled: 'Disabled',
@@ -34,6 +35,8 @@ const DEFINITION: LanguageDefinition = {
 		home: 'Home',
 		settings: 'Settings',
 	},
+	recordedOn: 'Recorded on',
+	samples: 'Samples',
 	thresholds: 'Thresholds',
 	updateModule: 'Update module',
 };
