@@ -40,6 +40,17 @@ function buildFetchModulesQuery() {
 			location
 			mac
 			vendor
+			samples(limit: 25, offset: 0) {
+				date
+				payload
+			}
+			thresholds {
+				name
+				current
+				min
+				max
+				default
+			}
 		}
 	}`;
 }
