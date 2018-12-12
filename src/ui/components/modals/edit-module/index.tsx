@@ -1,10 +1,12 @@
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { ChangeEvent, Component, FormEvent } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Module } from '@api/types';
+import { Module, ModuleThreshold } from '@api/types';
 import stores from '@store';
+
+import Threshold from './threshold';
 
 interface Props {
 	module: Module;
@@ -19,6 +21,8 @@ export default class EditModule extends Component<Props> {
 	@observable
 	private _name: string;
 	@observable
+	private _thresholds: ModuleThreshold[];
+	@observable
 	private _loading = false;
 	@observable
 	private _error: string | undefined;
@@ -28,6 +32,16 @@ export default class EditModule extends Component<Props> {
 
 		this._location = props.module.location;
 		this._name = props.module.name;
+		this._thresholds = props.module.thresholds.map((threshold) => ({ ...threshold }));
+	}
+
+	@computed
+	private get unit() {
+		const { module } = this.props;
+
+		return module.type === 'hygrometer'
+			? '%'
+			: module.type === 'thermometer' ? '°C' : '';
 	}
 
 	@action.bound
@@ -52,6 +66,7 @@ export default class EditModule extends Component<Props> {
 				...module,
 				name: this._name,
 				location: this._location,
+				thresholds: this._thresholds,
 			});
 			await stores.modules.loadModuleInfo(module.id);
 			onClose();
@@ -63,6 +78,7 @@ export default class EditModule extends Component<Props> {
 
 	render() {
 		const { onClose } = this.props;
+		const [thresholdMin, thresholdMax] = this._thresholds;
 
 		let loader;
 		if (this._loading) {
@@ -120,6 +136,13 @@ export default class EditModule extends Component<Props> {
 												</option>
 											</select>
 										</div>
+									</div>
+									<div className="field">
+										<label className="label">
+											{stores.i18n.current.thresholds}
+										</label>
+										<Threshold threshold={thresholdMin} type="min" unit={this.unit}/>
+										<Threshold threshold={thresholdMax} type="max" unit={this.unit} min={thresholdMin.current + 1}/>
 									</div>
 									<div className="field is-grouped is-grouped-centered">
 										<div className="control">
