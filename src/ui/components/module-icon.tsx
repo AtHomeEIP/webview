@@ -5,6 +5,7 @@ import React, { Component, HTMLProps } from 'react';
 import { ModuleType } from '@api/types';
 
 interface Props extends HTMLProps<HTMLSpanElement> {
+	isSmall?: boolean;
 	moduleType: ModuleType;
 }
 
@@ -13,19 +14,21 @@ export default class ModuleIcon extends Component<Props> {
 
 	@computed
 	private get className() {
-		const { className = '', moduleType } = this.props;
+		const { className = '', isSmall, moduleType } = this.props;
+
+		const size = isSmall ? 'fa-lg' : 'fa-2x';
 
 		switch (moduleType) {
 			case 'atmospherics':
-				return `fas fa-lg fa-cloud ${className}`;
+				return `fas fa-cloud ${className} ${size}`;
 			case 'hygrometer':
-				return `fas fa-lg fa-tint ${className}`;
+				return `fas fa-tint ${className} ${size}`;
 			case 'luxmeter':
-				return `fas fa-lg fa-lightbulb ${className}`;
+				return `fas fa-lightbulb ${className} ${size}`;
 			case 'thermometer':
-				return `fas fa-lg fa-thermometer-half ${className}`;
+				return `fas fa-thermometer-half ${className} ${size}`;
 			default:
-				return `fas fa-lg fa-question ${className}`;
+				return `fas fa-question ${className} ${size}`;
 		}
 	}
 
@@ -48,7 +51,7 @@ export default class ModuleIcon extends Component<Props> {
 	}
 
 	render() {
-		const { moduleType, ...rest } = this.props;
+		const { isSmall, moduleType, ...rest } = this.props;
 
 		return <span {...rest} className={this.className} style={this.style}/>;
 	}
