@@ -62,10 +62,10 @@ export default class ModulesStore {
 	private updateModulesList() {
 		fetchModules()
 			.then((modules) => {
-				return modules.reduce((acc, module) => {
-					acc[module.id] = module;
-					return acc;
-				}, {} as any);
+				return modules.reduce((acc, module) => ({
+					...acc,
+					[module.id]: module,
+				}), {});
 			})
 			.then((modules) => {
 				this._modules.replace(modules);
