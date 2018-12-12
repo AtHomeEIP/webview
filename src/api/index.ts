@@ -40,6 +40,17 @@ function buildFetchModulesQuery() {
 			location
 			mac
 			vendor
+			samples(limit: 25, offset: 0) {
+				date
+				payload
+			}
+			thresholds {
+				name
+				current
+				min
+				max
+				default
+			}
 		}
 	}`;
 }
@@ -92,9 +103,7 @@ export async function fetchModules(): Promise<Module[]> {
 		const { data: queryData } = await dataClient.post('/', {
 			query: buildFetchModulesQuery(),
 		});
-		return queryData.data.modules.map((module: Partial<Module>) => {
-			return { ...module, samples: [] };
-		});
+		return queryData.data.modules;
 	} catch (error) {
 		throw apiErrors.UNKNOWN_ERROR;
 	}
