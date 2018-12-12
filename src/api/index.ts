@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import * as apiErrors from './errors';
-import { Module } from './types';
+import { Module, ModuleThreshold } from './types';
 
 export const dataClient = axios.create({
 	baseURL: 'http://192.168.4.1:8080/graphql',
@@ -19,6 +19,13 @@ function buildFetchModuleQuery(id: string, offset: number, limit: number) {
 			samples(limit: ${limit}, offset: ${offset}) {
 				date
 				payload
+			}
+			thresholds {
+				name
+				current
+				min
+				max
+				default
 			}
 		}
 	}`;
@@ -38,26 +45,34 @@ function buildFetchModulesQuery() {
 }
 
 function buildUpdateModuleQuery(module: Module) {
-	const { id, name, location } = module;
-	const convertedLocation = convertModuleLocation(location);
+	const { id, name } = module;
+
+	const location = buildLocation(module.location);
+	const thresholds = module.thresholds.map(buildThreshold).join(' ');
 
 	return `mutation {
-		updateModule(id: "${id}", name: "${name}", location: "${convertedLocation}") {
+		updateModule(id: "${id}", name: "${name}", location: "${location}", thresholds: [${thresholds}]) {
 			id
 		}
 	}`;
-}
 
-function convertModuleLocation(location: string) {
-	switch (location) {
-		case 'Salon':
-			return '1';
-		case 'Chambre':
-			return '2';
-		case 'Cuisine':
-			return '3';
-		default:
-			return '4';
+	function buildLocation(moduleLocation: string) {
+		return moduleLocation === 'Salon'
+			? '1'
+			: moduleLocation === 'Chambre'
+				? '2'
+				: moduleLocation === 'Cuisine' ? '3' : '4';
+	}
+
+	function buildThreshold(moduleThreshold: ModuleThreshold) {
+		return `{
+			moduleId: ${module.id}
+			name: "${moduleThreshold.name}"
+			current: ${moduleThreshold.current}
+			min: ${moduleThreshold.min}
+			max: ${moduleThreshold.max}
+			default: ${moduleThreshold.default}
+		}`;
 	}
 }
 
