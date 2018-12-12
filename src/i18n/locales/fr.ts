@@ -34,6 +34,7 @@ const DEFINITION: LanguageDefinition = {
 		home: 'Accueil',
 		settings: 'Paramètres',
 	},
+	thresholds: 'Seuils',
 	updateModule: 'Modifier un module',
 };
 

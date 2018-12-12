@@ -37,5 +37,6 @@ export interface LanguageDefinition {
 		home: string;
 		settings: string;
 	};
+	thresholds: string;
 	updateModule: string;
 }
