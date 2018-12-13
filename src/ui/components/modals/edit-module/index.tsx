@@ -82,7 +82,7 @@ export default class EditModule extends Component<Props> {
 
 		let loader;
 		if (this._loading) {
-			loader = <div className="pageloader is-active"/>;
+			loader = <div className="pageloader is-link is-active"/>;
 		}
 
 		let error;
