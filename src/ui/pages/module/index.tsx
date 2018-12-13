@@ -18,6 +18,8 @@ interface RouteParams {
 export default class Module extends Component<RouteComponentProps<RouteParams>> {
 
 	@observable
+	private _isLoading = true;
+	@observable
 	private _showEditModal = false;
 
 	@action.bound
@@ -25,10 +27,11 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 		this._showEditModal = false;
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		const { id } = this.props.match.params;
 
-		stores.modules.loadModuleInfo(id);
+		await stores.modules.loadModuleInfo(id);
+		this._isLoading = false;
 	}
 
 	@action.bound
@@ -37,6 +40,10 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 	}
 
 	render() {
+		if (this._isLoading) {
+			return <div className="pageloader is-link is-active"/>;
+		}
+
 		const { id: moduleId } = this.props.match.params;
 
 		const module = stores.modules.modules.find((m) => m.id === moduleId);
