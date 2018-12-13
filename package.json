@@ -35,5 +35,5 @@
 		"lint": "tslint --fix --project tsconfig.json",
 		"start": "gulp build && concurrently \"gulp watch\" \"webpack-dev-server --colors --hot\""
 	},
-	"version": "1.2.0"
+	"version": "1.2.1"
 }
