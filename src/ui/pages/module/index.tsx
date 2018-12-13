@@ -30,8 +30,11 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 	async componentDidMount() {
 		const { id } = this.props.match.params;
 
-		await stores.modules.loadModuleInfo(id);
-		this._isLoading = false;
+		try {
+			await stores.modules.loadModuleInfo(id);
+		} finally {
+			this._isLoading = false;
+		}
 	}
 
 	@action.bound
