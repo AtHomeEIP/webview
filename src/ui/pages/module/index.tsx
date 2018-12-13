@@ -77,7 +77,7 @@ export default class Module extends Component<RouteComponentProps<RouteParams>> 
 									{module.name}
 								</h4>
 								<h6 className="subtitle is-6">
-									{module.type}
+									{module.location}
 								</h6>
 								<button className="button is-link" onClick={this.openEditModal}>
 									<span className="icon">
